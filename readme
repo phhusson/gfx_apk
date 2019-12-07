@@ -1,0 +1,11 @@
+ro.gfx.driver.0=me.phh.adreno_gfx
+ro.hardware.egl=adreno
+
+adb push ... /system/priv-app/gfx.apk
+
+cp llndk.libraries.27.txt llndk.libraries.26.txt
+cp vndksp.libraries.27.txt vndksp.libraries.26.txt
+
+rm -Rf *; unzip ../app/build/outputs/apk/debug/app-debug.apk; cp -R ../lib .; rm -f ../unsigned.apk && zip -0 ../unsigned.apk $(find -type f) && zipalign -zvpf 4 ../unsigned.apk ../unsigned-aligned.apk && signapk ../../treble_app/keys/platform.x509.pem ../../treble_app/keys/platform.pk8 ../unsigned-aligned.apk ../signed.apk && adb install -r ../signed.apk
+
+select game driver in developer settings
