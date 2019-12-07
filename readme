@@ -9,3 +9,23 @@ cp vndksp.libraries.27.txt vndksp.libraries.26.txt
 rm -Rf *; unzip ../app/build/outputs/apk/debug/app-debug.apk; cp -R ../lib .; rm -f ../unsigned.apk && zip -0 ../unsigned.apk $(find -type f) && zipalign -zvpf 4 ../unsigned.apk ../unsigned-aligned.apk && signapk ../../treble_app/keys/platform.x509.pem ../../treble_app/keys/platform.pk8 ../unsigned-aligned.apk ../signed.apk && adb install -r ../signed.apk
 
 select game driver in developer settings
+
+
+frameworks/base/core/java/android/os/GraphicsEnvironment.java
+
+```
+@@ -718,10 +718,12 @@ public class GraphicsEnvironment {
+             // ApplicationInfo from context directly.
+             ai = context.getApplicationInfo();
+         }
++       /*
+         if (ai.isPrivilegedApp() || (ai.isSystemApp() && !ai.isUpdatedSystemApp())) {
+-            if (DEBUG) Log.v(TAG, "Ignoring driver package for privileged/non-updated system app.");
++            if (DEBUG) Log.e(TAG, "Ignoring driver package for privileged/non-updated system app.");
+             return null;
+         }
++       */
+ 
+         final boolean enablePrereleaseDriver =
+                 (ai.metaData != null && ai.metaData.getBoolean(METADATA_DEVELOPER_DRIVER_ENABLE))
+```
